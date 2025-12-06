@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strefa Urzędnika - Biuro Rzeczy Znalezionych</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Specific overrides for Official Portal */
+        .official-header {
+            background-color: #002b80;
+            /* Darker blue */
+            border-bottom: 4px solid #DC143C;
+        }
+
+        .official-nav a {
+            color: white;
+        }
+
+        .official-nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .official-nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .step.active {
+            color: var(--primary-color);
+        }
+
+        .step.completed {
+            color: var(--success-color);
+        }
+
+        .step-number {
+            display: block;
+            width: 30px;
+            height: 30px;
+            background: #ddd;
+            color: white;
+            border-radius: 50%;
+            line-height: 30px;
+            margin: 0 auto 10px;
+        }
+
+        .step.active .step-number {
+            background: var(--primary-color);
+        }
+
+        .step.completed .step-number {
+            background: var(--success-color);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="main-header official-header" role="banner">
+            <a href="{{ url_for('urzad_dashboard') }}" class="logo" style="color: white;">
+                <span class="logo-icon" aria-hidden="true">🏛️</span>
+                <div>
+                    <h1>Strefa <span class="highlight" style="color: #ffcccb;">Urzędnika</span></h1>
+                    <small style="color: #ddd;">Panel Zarządzania Danymi</small>
+                </div>
+            </a>
+            <nav class="official-nav" role="navigation">
+                <a href="{{ url_for('urzad_dashboard') }}"
+                    class="{{ 'active' if request.endpoint == 'urzad_dashboard' else '' }}">Pulpit</a>
+                <a href="{{ url_for('urzad_upload') }}"
+                    class="{{ 'active' if request.endpoint == 'urzad_upload' else '' }}">Dodaj Zbiór Danych</a>
+                <a href="{{ url_for('index') }}" target="_blank">Widok Obywatela ↗</a>
+            </nav>
+        </header>
+
+        <main id="main-content" role="main">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+{% extends "official/base_official.html" %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <h2>Twoje Zbiory Danych</h2>
+        <a href="{{ url_for('urzad_upload') }}" class="cta-btn">+ Dodaj Nowy Zbiór</a>
+    </div>
+
+    <div class="glass-card" style="background: white; border: 1px solid #ccc; padding: 0;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead style="background: #f3f3f3; border-bottom: 2px solid #ccc;">
+                <tr>
+                    <th style="padding: 15px; text-align: left;">Nazwa Zbioru</th>
+                    <th style="padding: 15px; text-align: left;">Data Utworzenia</th>
+                    <th style="padding: 15px; text-align: left;">Liczba Rekordów</th>
+                    <th style="padding: 15px; text-align: left;">Status</th>
+                    <th style="padding: 15px; text-align: right;">Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if datasets %}
+                {% for dataset in datasets %}
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 15px;"><strong>{{ dataset.title }}</strong></td>
+                    <td style="padding: 15px;">{{ dataset.date }}</td>
+                    <td style="padding: 15px;">{{ dataset.count }}</td>
+                    <td style="padding: 15px;">
+                        <span style="padding: 5px 10px; border-radius: 15px; font-size: 0.85em; font-weight: bold; 
+                                background: {{ '#e6fffa' if dataset.status == 'Opublikowany' else '#fff5f5' }}; 
+                                color: {{ '#006600' if dataset.status == 'Opublikowany' else '#cc0000' }};">
+                            {{ dataset.status }}
+                        </span>
+                    </td>
+                    <td style="padding: 15px; text-align: right;">
+                        <button style="padding: 5px 10px; font-size: 0.9em;"
+                            onclick="alert('Funkcja edycji w przygotowaniu (Hackathon Demo)')">Edytuj</button>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="5" style="padding: 40px; text-align: center; color: #666;">
+                        Brak opublikowanych zbiorów danych. Rozpocznij od dodania pierwszego zbioru.
+                    </td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

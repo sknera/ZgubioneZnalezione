@@ -1,0 +1,4 @@
+nazwa_przedmiotu,kategoria,data_znalezienia,miejsce_znalezienia_miasto,miejsce_znalezienia_ulica,jednostka_przechowujaca,kontakt_email,status,opis_szczegolowy
+Czerwony Portfel,Dokumenty,2023-11-01,Poznań,Półwiejska 12,Biuro Rzeczy Znalezionych Poznań,biuro@poznan.pl,znaleziony,Zawiera kartę miejską
+Klucze do samochodu,Klucze,2023-11-02,Poznań,Głogowska 45,Komisariat Policji,policja@poznan.pl,znaleziony,Marka Toyota
+Telefon Samsung,Elektronika,2023-11-03,Poznań,Młyńska 1,Biuro Rzeczy Znalezionych Poznań,biuro@poznan.pl,znaleziony,Czarny z pękniętym ekranem

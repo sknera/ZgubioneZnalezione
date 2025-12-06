@@ -1,0 +1,226 @@
+{% extends "official/base_official.html" %}
+
+{% block content %}
+<div class="wizard-container">
+    <h2>Kreator Udostępniania Danych</h2>
+
+    <!-- Step Indicator -->
+    <div class="step-indicator">
+        <div class="step active" id="step1-indicator">
+            <span class="step-number">1</span>
+            Metadane
+        </div>
+        <div class="step" id="step2-indicator">
+            <span class="step-number">2</span>
+            Źródło
+        </div>
+        <div class="step" id="step3-indicator">
+            <span class="step-number">3</span>
+            Weryfikacja
+        </div>
+        <div class="step" id="step4-indicator">
+            <span class="step-number">4</span>
+            Publikacja
+        </div>
+    </div>
+
+    <!-- Step 1: Metadata -->
+    <div id="step1" class="wizard-step">
+        <h3>Krok 1: Opisz Zbiór Danych</h3>
+        <div class="form-card">
+            <div class="form-group">
+                <label>Tytuł Zbioru *</label>
+                <input type="text" id="datasetTitle" placeholder="np. Rzeczy znalezione - Powiat Poznański (2023)"
+                    required>
+            </div>
+            <div class="form-group">
+                <label>Opis</label>
+                <textarea id="datasetDesc" rows="3" placeholder="Krótki opis zawartości zbioru..."></textarea>
+            </div>
+            <button class="submit-btn" onclick="nextStep(2)">Dalej</button>
+        </div>
+    </div>
+
+    <!-- Step 2: Source -->
+    <div id="step2" class="wizard-step" hidden>
+        <h3>Krok 2: Wybierz Źródło Danych</h3>
+        <div class="form-row">
+            <div class="glass-card" style="flex: 1; text-align: center; cursor: pointer; border: 2px solid #ccc;"
+                onclick="selectSource('csv')">
+                <div style="font-size: 3rem;">📄</div>
+                <h4>Wgraj plik CSV</h4>
+                <p>Importuj dane z gotowego pliku</p>
+            </div>
+            <div class="glass-card" style="flex: 1; text-align: center; cursor: pointer; border: 2px solid #ccc;"
+                onclick="selectSource('manual')">
+                <div style="font-size: 3rem;">✍️</div>
+                <h4>Wprowadź Ręcznie</h4>
+                <p>Wypełnij formularz online</p>
+            </div>
+        </div>
+
+        <div id="csvUploadSection" style="margin-top: 20px;" hidden>
+            <div class="drop-zone">
+                <p>Upuść plik CSV tutaj lub kliknij aby wybrać</p>
+                <input type="file" id="csvFile" accept=".csv">
+            </div>
+            <button class="submit-btn" style="margin-top: 20px;" onclick="uploadCSV()">Wgraj i Analizuj</button>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <button class="contact-btn" onclick="prevStep(1)">Wstecz</button>
+        </div>
+    </div>
+
+    <!-- Step 3: Verification -->
+    <div id="step3" class="wizard-step" hidden>
+        <h3>Krok 3: Weryfikacja Danych</h3>
+        <p>Sprawdź poprawność zaimportowanych danych.</p>
+
+        <div id="validationResults">
+            <!-- Table will be injected here -->
+        </div>
+
+        <div style="margin-top: 20px;">
+            <button class="contact-btn" onclick="prevStep(2)">Wstecz</button>
+            <button class="submit-btn" onclick="nextStep(4)">Zatwierdź i Przejdź Dalej</button>
+        </div>
+    </div>
+
+    <!-- Step 4: Publish -->
+    <div id="step4" class="wizard-step" hidden>
+        <h3>Krok 4: Publikacja w dane.gov.pl</h3>
+        <div class="glass-card" style="text-align: center; padding: 40px;">
+            <div style="font-size: 4rem; margin-bottom: 20px;">🚀</div>
+            <h4>Gotowy do publikacji!</h4>
+            <p>Twój zbiór danych został zweryfikowany i jest gotowy do wysłania na portal dane.gov.pl.</p>
+            <button class="submit-btn" style="font-size: 1.2rem; padding: 15px 40px; margin-top: 20px;"
+                onclick="publishDataset()">OPUBLIKUJ DANE</button>
+        </div>
+        <div style="margin-top: 20px;">
+            <button class="contact-btn" onclick="prevStep(3)">Wstecz</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let currentStep = 1;
+
+    function nextStep(step) {
+        document.getElementById(`step${currentStep}`).hidden = true;
+        document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
+        document.getElementById(`step${currentStep}-indicator`).classList.add('completed');
+
+        currentStep = step;
+
+        document.getElementById(`step${currentStep}`).hidden = false;
+        document.getElementById(`step${currentStep}-indicator`).classList.add('active');
+    }
+
+    function prevStep(step) {
+        document.getElementById(`step${currentStep}`).hidden = true;
+        document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
+
+        currentStep = step;
+
+        document.getElementById(`step${currentStep}`).hidden = false;
+        document.getElementById(`step${currentStep}-indicator`).classList.add('active');
+        document.getElementById(`step${currentStep}-indicator`).classList.remove('completed');
+    }
+
+    function selectSource(type) {
+        if (type === 'csv') {
+            document.getElementById('csvUploadSection').hidden = false;
+        } else {
+            alert('Tryb ręczny w budowie. Proszę użyć CSV.');
+        }
+    }
+
+    async function uploadCSV() {
+        const fileInput = document.getElementById('csvFile');
+        const file = fileInput.files[0];
+        if (!file) {
+            alert('Wybierz plik!');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = await fetch('/urzad/upload_csv', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+
+            if (result.success) {
+                window.uploadedItems = result.items; // Store for publishing
+
+                let tableHtml = '<div style="margin-bottom: 10px;">Znaleziono rekordów: <strong>' + result.count + '</strong></div>';
+
+                if (result.errors && result.errors.length > 0) {
+                    tableHtml += '<div style="color: red; margin-bottom: 10px;">Znaleziono błędy w pliku!</div>';
+                    tableHtml += '<ul style="color: red;">';
+                    result.errors.forEach(err => {
+                        tableHtml += `<li>Wiersz ${err.row}: ${err.errors.join(', ')}</li>`;
+                    });
+                    tableHtml += '</ul>';
+                }
+
+                tableHtml += '<table style="width:100%; border-collapse: collapse; font-size: 0.9em;">';
+                tableHtml += '<thead style="background: #f3f3f3;"><tr><th style="padding:8px; border:1px solid #ddd;">Nazwa</th><th style="padding:8px; border:1px solid #ddd;">Kategoria</th><th style="padding:8px; border:1px solid #ddd;">Data</th><th style="padding:8px; border:1px solid #ddd;">Status</th></tr></thead><tbody>';
+
+                result.items.slice(0, 10).forEach(row => {
+                    tableHtml += `<tr>
+                        <td style="padding:8px; border:1px solid #ddd;">${row.nazwa_przedmiotu || '-'}</td>
+                        <td style="padding:8px; border:1px solid #ddd;">${row.kategoria || '-'}</td>
+                        <td style="padding:8px; border:1px solid #ddd;">${row.data_znalezienia || '-'}</td>
+                        <td style="padding:8px; border:1px solid #ddd; color:green">✔ OK</td>
+                    </tr>`;
+                });
+
+                if (result.items.length > 10) {
+                    tableHtml += `<tr><td colspan="4" style="text-align:center; padding: 10px;">... i ${result.items.length - 10} więcej ...</td></tr>`;
+                }
+
+                tableHtml += '</tbody></table>';
+
+                document.getElementById('validationResults').innerHTML = tableHtml;
+                nextStep(3);
+            } else {
+                alert('Błąd: ' + result.error);
+            }
+        } catch (e) {
+            console.error(e);
+            alert('Wystąpił błąd podczas wysyłania pliku.');
+        }
+    }
+
+    async function publishDataset() {
+        const title = document.getElementById('datasetTitle').value;
+        const desc = document.getElementById('datasetDesc').value;
+
+        try {
+            const response = await fetch('/urzad/publish', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: title,
+                    description: desc,
+                    items: window.uploadedItems || []
+                })
+            });
+            const result = await response.json();
+
+            if (result.success) {
+                alert(result.message);
+                window.location.href = "{{ url_for('urzad_dashboard') }}";
+            }
+        } catch (e) {
+            alert('Błąd publikacji.');
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biuro Rzeczy Znalezionych - Zgłoś lub Znajdź Przedmiot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Przejdź do treści</a>
+
+    <div class="app-container">
+        <header class="main-header" role="banner">
+            <a href="{{ url_for('index') }}" class="logo">
+                <span class="logo-icon" aria-hidden="true">🏛️</span>
+                <div>
+                    <h1>Biuro Rzeczy <span class="highlight">Znalezionych</span></h1>
+                    <small>Serwis Obywatelski</small>
+                </div>
+            </a>
+            <nav role="navigation" aria-label="Główna nawigacja">
+                <a href="{{ url_for('index') }}" class="{{ 'active' if request.endpoint == 'index' else '' }}">Zgłoś
+                    Znalezisko</a>
+                <a href="{{ url_for('search') }}"
+                    class="{{ 'active' if request.endpoint == 'search' else '' }}">Przeszukaj Bazę</a>
+            </nav>
+        </header>
+
+        <main id="main-content" role="main">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <div id="toast-container" aria-live="polite"></div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>

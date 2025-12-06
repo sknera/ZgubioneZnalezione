@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Formularz Zgłoszenia Znaleziska</h2>
+<p class="intro-text">Wypełnij poniższy formularz, aby zgłosić znaleziony przedmiot. Pola oznaczone gwiazdką (*) są
+    wymagane.</p>
+
+<div class="split-layout">
+    <section class="upload-section" aria-labelledby="upload-heading">
+        <div class="upload-card">
+            <h3 id="upload-heading">1. Zdjęcie Przedmiotu (Opcjonalne)</h3>
+            <p>Prześlij zdjęcie, aby system automatycznie uzupełnił dane.</p>
+
+            <div class="drop-zone" id="dropZone" tabindex="0" role="button"
+                aria-label="Kliknij lub upuść zdjęcie tutaj">
+                <div class="drop-zone-content">
+                    <span class="icon" aria-hidden="true">�</span>
+                    <p><strong>Wybierz plik</strong> lub upuść go tutaj</p>
+                    <input type="file" id="fileInput" accept="image/*" class="visually-hidden"
+                        style="opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; cursor: pointer;">
+                </div>
+                <div class="preview-container" id="previewContainer" hidden>
+                    <img id="imagePreview" src="" alt="Podgląd zdjęcia przedmiotu">
+                    <button class="remove-btn" id="removeBtn" aria-label="Usuń zdjęcie">×</button>
+                </div>
+                <div class="loading-overlay" id="loadingOverlay" hidden>
+                    <div class="spinner"></div>
+                    <p>Trwa analizowanie zdjęcia...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="form-section" aria-labelledby="form-heading">
+        <div class="form-card">
+            <h3 id="form-heading">2. Szczegóły Przedmiotu</h3>
+            <form id="lostItemForm">
+                <div class="form-group">
+                    <label for="name">Nazwa Przedmiotu *</label>
+                    <input type="text" id="name" name="name" placeholder="np. Czarny portfel" required
+                        aria-required="true">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="category">Kategoria</label>
+                        <select id="category" name="category">
+                            <option value="">-- Wybierz Kategorię --</option>
+                            {% for cat in categories %}
+                            <option value="{{ cat }}">{{ cat }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Data Znalezienia</label>
+                        <input type="date" id="date" name="date">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="location">Miejsce Znalezienia</label>
+                        <input type="text" id="location" name="location" placeholder="np. Park Miejski, ul. Główna">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">Email Kontaktowy *</label>
+                        <input type="email" id="contact" name="contact" placeholder="jan.kowalski@email.pl" required
+                            aria-required="true">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Opis Szczegółowy</label>
+                    <textarea id="description" name="description" rows="4"
+                        placeholder="Opisz cechy charakterystyczne przedmiotu..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="security_question">Pytanie Weryfikacyjne *</label>
+                    <span id="security-desc"
+                        style="display:block; font-size: 0.9em; margin-bottom: 5px; color: #555;">Zadaj pytanie, na
+                        które odpowiedź zna tylko właściciel (np. "Co jest w środku?", "Jaka jest tapeta na
+                        telefonie?").</span>
+                    <input type="text" id="security_question" name="security_question" placeholder="Wpisz pytanie..."
+                        required aria-required="true" aria-describedby="security-desc">
+                </div>
+
+                <button type="submit" class="submit-btn">Zgłoś Znalezisko</button>
+            </form>
+        </div>
+    </section>
+</div>
+{% endblock %}
