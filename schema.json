@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "data_znalezienia": {
+      "format": "date",
+      "type": "string"
+    },
+    "jednostka_przechowujaca": {
+      "type": "string"
+    },
+    "kategoria": {
+      "type": "string"
+    },
+    "kontakt_email": {
+      "format": "email",
+      "type": "string"
+    },
+    "kontakt_telefon": {
+      "type": "string"
+    },
+    "location_lat": {
+      "type": "number"
+    },
+    "location_lng": {
+      "type": "number"
+    },
+    "location_radius": {
+      "type": "number"
+    },
+    "miejsce_znalezienia_miasto": {
+      "type": "string"
+    },
+    "miejsce_znalezienia_ulica": {
+      "type": "string"
+    },
+    "nazwa_przedmiotu": {
+      "type": "string"
+    },
+    "opis_szczegolowy": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "znaleziony",
+        "nieznaleziony",
+        "oddane"
+      ],
+      "type": "string"
+    },
+    "sygnatura_sprawy": {
+      "type": "string"
+    },
+    "zdjecie_url": {
+      "format": "uri",
+      "type": "string"
+    }
+  },
+  "required": [
+    "nazwa_przedmiotu",
+    "kategoria",
+    "data_znalezienia",
+    "miejsce_znalezienia_miasto",
+    "miejsce_znalezienia_ulica",
+    "jednostka_przechowujaca",
+    "kontakt_email",
+    "status"
+  ],
+  "title": "FoundItem",
+  "type": "object"
+}
