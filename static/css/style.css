@@ -1,18 +1,18 @@
 :root {
-    --primary-color: #003399;
-    /* Navy Blue - Gov standard */
-    --secondary-color: #DC143C;
-    /* Red accent */
-    --text-color: #000000;
+    --primary-color: #0865C9; /* bootstrap base primary */
+    --primary-hover: #0753a4;
+    --secondary-color: #FFD200; /* accent kept for highlights */
+    --text-color: #0C1427;
     --bg-color: #FFFFFF;
-    --bg-alt: #F3F3F3;
-    --border-color: #CCCCCC;
-    --focus-color: #FFD700;
-    /* High visibility focus */
-    --link-color: #003399;
-    --link-hover: #000066;
-    --success-color: #006600;
-    --error-color: #CC0000;
+    --bg-alt: #F4F6FA;
+    --border-color: #D6DCE8;
+    --focus-color: #FFD200;
+    --link-color: #0865C9;
+    --link-hover: #0753a4;
+    --success-color: #0F8A3C;
+    --error-color: #C62828;
+    --tooltip-bg: #0f2648;
+    --tooltip-text: #ffffff;
 }
 
 * {
@@ -227,32 +227,43 @@ button:focus,
 
 /* Upload Area */
 .drop-zone {
-    border: 3px dashed var(--border-color);
-    background: white;
-    padding: 40px;
+    border: 3px dashed #0d6efd;
+    background: linear-gradient(135deg, rgba(8, 101, 201, 0.04), rgba(8, 101, 201, 0.02));
+    padding: 48px 32px;
     text-align: center;
     cursor: pointer;
     position: relative;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
 .drop-zone:hover,
 .drop-zone:focus-within {
-    border-color: var(--primary-color);
-    background-color: #f0f8ff;
+    border-color: var(--primary-hover);
+    box-shadow: 0 8px 32px rgba(8, 101, 201, 0.08);
+    background: linear-gradient(135deg, rgba(8, 101, 201, 0.08), rgba(8, 101, 201, 0.04));
 }
 
 .drop-zone-content .icon {
-    font-size: 3rem;
+    font-size: 3.4rem;
     display: block;
     margin-bottom: 15px;
-    color: var(--text-color);
+    color: var(--primary-color);
+}
+
+.drop-title {
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+}
+
+.drop-hint {
+    font-size: 0.95rem;
+    color: #4b5563;
 }
 
 .preview-container {
-    margin-top: 20px;
+    margin-top: 0;
     position: relative;
-    display: inline-block;
+    display: none;
 }
 
 #imagePreview {
@@ -262,15 +273,7 @@ button:focus,
 }
 
 .remove-btn {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    background: var(--error-color);
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    padding: 0;
-    line-height: 30px;
+    display: none;
 }
 
 /* Search Filters */
@@ -279,6 +282,56 @@ button:focus,
     padding: 20px;
     border: 1px solid var(--border-color);
     margin-bottom: 30px;
+}
+
+.map-filter-card {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    padding: 16px;
+    margin-top: 16px;
+}
+
+.map-filter-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.map-hint {
+    color: #444;
+    font-size: 0.95rem;
+    margin-top: 4px;
+}
+
+#searchMap {
+    height: 360px;
+    width: 100%;
+    border: 1px solid var(--border-color);
+    margin-top: 12px;
+}
+
+.map-status-row {
+    margin-top: 10px;
+    color: #222;
+    font-weight: 600;
+}
+
+.map-status {
+    font-size: 0.95rem;
+}
+
+.ghost-btn {
+    background: #fff;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    text-transform: none;
+    padding: 10px 16px;
+}
+
+.ghost-btn:hover {
+    background: var(--bg-alt);
 }
 
 .search-main {
@@ -433,6 +486,19 @@ button:focus,
     height: 40px;
     animation: spin 1s linear infinite;
     margin: 0 auto 10px;
+}
+
+/* Official CSV edit view */
+#editCsvTable tbody tr.edit-csv-row {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+#editCsvTable tbody tr.edit-csv-row:last-child {
+    border-bottom: 0;
+}
+
+#editCsvTable td {
+    vertical-align: top;
 }
 
 @keyframes spin {

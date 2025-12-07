@@ -14,14 +14,14 @@
             <div class="drop-zone" id="dropZone" tabindex="0" role="button"
                 aria-label="Kliknij lub upuść zdjęcie tutaj">
                 <div class="drop-zone-content">
-                    <span class="icon" aria-hidden="true">�</span>
-                    <p><strong>Wybierz plik</strong> lub upuść go tutaj</p>
+                    <p class="drop-title"><strong>Wybierz plik</strong> lub upuść go tutaj</p>
+                    <p class="drop-hint">Obsługujemy JPG, PNG, HEIC. Maks. 16 MB.</p>
                     <input type="file" id="fileInput" accept="image/*" class="visually-hidden"
                         style="opacity: 0; position: absolute; width: 100%; height: 100%; top: 0; left: 0; cursor: pointer;">
                 </div>
-                <div class="preview-container" id="previewContainer" hidden>
-                    <img id="imagePreview" src="" alt="Podgląd zdjęcia przedmiotu">
-                    <button class="remove-btn" id="removeBtn" aria-label="Usuń zdjęcie">×</button>
+                <div class="preview-container" id="previewContainer" hidden aria-hidden="true">
+                    <img id="imagePreview" alt="Podgląd przesłanego zdjęcia" />
+                    <button type="button" id="removeBtn" class="ghost-btn" style="margin-top: 10px;">Usuń zdjęcie</button>
                 </div>
                 <div class="loading-overlay" id="loadingOverlay" hidden>
                     <div class="spinner"></div>
@@ -47,7 +47,7 @@
                         <select id="category" name="category">
                             <option value="">-- Wybierz Kategorię --</option>
                             {% for cat in categories %}
-                            <option value="{{ cat }}">{{ cat }}</option>
+                            <option value="{{ cat }}" {% if cat == "Dokumenty" %}selected{% endif %}>{{ cat }}</option>
                             {% endfor %}
                         </select>
                     </div>

@@ -1,0 +1,12 @@
+nazwa_przedmiotu,kategoria,data_znalezienia,miejsce_znalezienia_miasto,miejsce_znalezienia_ulica,jednostka_przechowujaca,kontakt_email,status,opis_szczegolowy,location_lat,location_lng,location_radius
+Portfel czarny,Portfel,2023-11-01,Wrocław,Rynek 12,Biuro Rzeczy Znalezionych Wrocław,biuro@wroclaw.pl,znaleziony,Mały, skóra ekologiczna.,51.1090,17.0310,170
+Klucze z kartą,Klucze,2023-11-02,Wrocław,Świdnicka 20,Komisariat Stare Miasto,policja@wroclaw.pl,znaleziony,Dwa klucze i karta magnetyczna.,51.1065,17.0338,150
+Telefon Huawei P30,Telefon,2023-11-03,Wrocław,Piłsudskiego 60,PKP Wrocław,pkp@wroclaw.pl,znaleziony,Czarny, szkło ochronne pęknięte.,51.0987,17.0366,200
+Plecak turystyczny,Plecak,2023-11-04,Wrocław,Legnicka 25,MPK Wrocław,mpk@wroclaw.pl,znaleziony,Granatowy z pasem biodrowym.,51.1122,17.0175,220
+Okulary przeciwsłoneczne,Okulary,2023-11-05,Wrocław,Oławska 9,Centrum Handlowe,centrum@wroclaw.pl,znaleziony,Czarne oprawki, etui czarne.,51.1081,17.0386,140
+Parasol miejski,Parasol,2023-11-06,Wrocław,Kazimierza Wielkiego 15,Biuro Rzeczy Znalezionych Wrocław,biuro@wroclaw.pl,znaleziony,Niebieski automatyczny.,51.1086,17.0289,150
+Słuchawki douszne,Słuchawki,2023-11-07,Wrocław,Plac Grunwaldzki 22,Politechnika Wrocławska,bzn@pwr.edu.pl,znaleziony,Białe, bez etui.,51.1117,17.0605,160
+Książka "Solaris",Książka,2023-11-08,Wrocław,Ruská 1,Biblioteka Miejska,biblioteka@wroclaw.pl,znaleziony,Twarda okładka, zakładka.,51.1102,17.0362,130
+Zegarek czarny sportowy,Zegarek,2023-11-09,Wrocław,Nowy Świat 3,Centrum Handlowe,centrum@wroclaw.pl,znaleziony,Gumowy pasek.,51.1108,17.0281,170
+Torba materiałowa,Torba,2023-11-10,Wrocław,Kołłątaja 5,MPK Wrocław,mpk@wroclaw.pl,znaleziony,Szara, kieszeń z przodu.,51.1036,17.0399,190
+

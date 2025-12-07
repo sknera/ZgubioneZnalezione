@@ -1,0 +1,141 @@
+{% extends "official/base_official.html" %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h2>Edytuj Wgrane Dane CSV</h2>
+    <form id="editCsvForm">
+        <table id="editCsvTable" style="width:100%; border-collapse:collapse;">
+            <thead style="background:#f3f3f3;">
+                <tr>
+                    <th style="padding:8px; width:24%;">Nazwa</th>
+                    <th style="padding:8px;">Kategoria</th>
+                    <th style="padding:8px; width:110px;">Data</th>
+                    <th style="padding:8px;">Szer./Dł.</th>
+                    <th style="padding:8px;">Miasto</th>
+                    <th style="padding:8px;">Ulica</th>
+                    <th style="padding:8px;">Opis</th>
+                    <th style="padding:8px;">Kontakt</th>
+                    <th style="padding:8px;">Oddane</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                {% set contact_parts = [] %}
+                {% if item.kontakt_telefon %}{% set contact_parts = contact_parts + [item.kontakt_telefon] %}{% endif %}
+                {% if item.kontakt_email %}{% set contact_parts = contact_parts + [item.kontakt_email] %}{% endif %}
+                {% if not contact_parts and (item.kontakt or item.contact) %}{% set contact_parts = contact_parts + [item.kontakt or item.contact] %}{% endif %}
+                <tr class="edit-csv-row">
+                    <td style="padding:8px;">
+                        <textarea name="name" rows="2"
+                            style="width:100%;">{{ item.nazwa_przedmiotu or item.name }}</textarea>
+                    </td>
+                    <td style="padding:8px;"><input type="text" name="category"
+                            value="{{ item.kategoria or item.category }}" style="width:100%;" /></td>
+                    <td style="padding:8px;"><input type="date" name="date"
+                            value="{{ item.data_znalezienia or item.date }}" style="width:100px;" /></td>
+                    <td style="padding:8px;">
+                        <div style="display:flex; gap:6px; flex-wrap:nowrap; align-items:center;">
+                            <input type="text" name="location_lat" value="{{ item.location_lat or '' }}"
+                                placeholder="53.452" style="width:48%;">
+                            <input type="text" name="location_lng" value="{{ item.location_lng or '' }}"
+                                placeholder="18.232" style="width:48%;">
+                        </div>
+                    </td>
+                    <td style="padding:8px;">
+                        <input type="text" name="location_city"
+                            value="{{ item.miejsce_znalezienia_miasto or item.location_city or '' }}"
+                            placeholder="np. Poznań" style="width:100%;" />
+                    </td>
+                    <td style="padding:8px;">
+                        <input type="text" name="location_street"
+                            value="{{ item.miejsce_znalezienia_ulica or item.location_street or item.location or '' }}"
+                            placeholder="np. Wrocławska 13" style="width:100%;" />
+                    </td>
+                    <td style="padding:8px;"><input type="text" name="description"
+                            value="{{ item.opis_szczegolowy or item.opis or item.description or '' }}"
+                            style="width:100%;" /></td>
+                    <td style="padding:8px;"><input type="text" name="contact"
+                            value="{{ contact_parts|join(' / ') }}" placeholder="telefon lub e-mail" style="width:100%;" /></td>
+                    <td style="padding:8px;">
+                        <input type="checkbox" name="status" {% if item.status=='znaleziony' %}checked{% endif %} />
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="button" class="cta-btn" style="margin-top:15px;" onclick="saveEdits()">Zapisz Zmiany</button>
+    </form>
+</div>
+
+<script>
+    function saveEdits() {
+        const rows = document.querySelectorAll('#editCsvTable tbody tr');
+        const editedItems = [];
+        rows.forEach(row => {
+            const getVal = (selector) => {
+                const el = row.querySelector(selector);
+                return el ? el.value.trim() : '';
+            };
+            const lat = getVal('input[name="location_lat"]');
+            const lng = getVal('input[name="location_lng"]');
+            const city = getVal('input[name="location_city"]');
+            const street = getVal('input[name="location_street"]');
+            const radius = '';
+
+            const locationParts = [];
+            if (lat && lng) locationParts.push(`${lat}, ${lng}`);
+            if (city) locationParts.push(city);
+            if (street) locationParts.push(street);
+            const location = locationParts.join(', ');
+
+            const contactRaw = getVal('input[name="contact"]');
+            const contactTokens = contactRaw.split(/[,;/]/).map(t => t.trim()).filter(Boolean);
+            const emails = contactTokens.filter(t => t.includes('@'));
+            const phones = contactTokens.filter(t => !t.includes('@'));
+            const contact = contactTokens.join(' / ');
+
+            const description = getVal('input[name="description"]');
+            const name = getVal('textarea[name="name"]') || getVal('input[name="name"]');
+
+            const item = {
+                name: name,
+                category: getVal('input[name="category"]'),
+                date: getVal('input[name="date"]'),
+                location,
+                location_lat: lat,
+                location_lng: lng,
+                location_radius: radius,
+                miejsce_znalezienia_miasto: city,
+                miejsce_znalezienia_ulica: street,
+                opis_szczegolowy: description,
+                opis: description,
+                description: description,
+                kontakt: contact,
+                kontakt_email: emails[0] || '',
+                kontakt_telefon: phones[0] || '',
+                contact: contact,
+                status: row.querySelector('input[name="status"]')?.checked ? 'znaleziony' : 'nieznaleziony'
+            };
+            editedItems.push(item);
+        });
+        fetch('/urzad/save_csv_edits', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: editedItems })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Zmiany zapisane pomyślnie.');
+                    window.location.href = '{{ url_for("urzad_dashboard") }}';
+                } else {
+                    alert('Błąd przy zapisywaniu.');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Wystąpił błąd.');
+            });
+    }
+</script>
+{% endblock %}

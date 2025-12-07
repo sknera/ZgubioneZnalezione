@@ -1,0 +1,12 @@
+nazwa_przedmiotu,kategoria,data_znalezienia,miejsce_znalezienia_miasto,miejsce_znalezienia_ulica,jednostka_przechowujaca,kontakt_email,status,opis_szczegolowy,location_lat,location_lng,location_radius
+Portfel skórzany,Portfel,2023-11-01,Poznań,Stary Rynek 5,Biuro Rzeczy Znalezionych Poznań,biuro@poznan.pl,znaleziony,Brązowy portfel z inicjałami.,52.4065,16.9252,180
+Klucze z brelokiem,Klucze,2023-11-02,Poznań,Głogowska 45,Komisariat Policji Łazarz,policja@poznan.pl,znaleziony,Brelok w kształcie auta.,52.3958,16.9067,160
+Telefon Samsung A52,Telefon,2023-11-03,Poznań,Dworcowa 1,Biuro Rzeczy Znalezionych PKP,pkp@poznan.pl,znaleziony,Niebieska obudowa, pęknięty ekran.,52.4022,16.9109,200
+Plecak granatowy,Plecak,2023-11-04,Poznań,Mostowa 12,MPK Poznań,mzk@poznan.pl,znaleziony,Ma naszywki górskie.,52.4074,16.9467,220
+Okulary korekcyjne,Okulary,2023-11-05,Poznań,Święty Marcin 40,Centrum Handlowe,centrum@poznan.pl,znaleziony,Czarne oprawki w etui.,52.4069,16.9178,150
+Parasol składany,Parasol,2023-11-06,Poznań,Ratajczaka 18,Biuro Rzeczy Znalezionych Poznań,biuro@poznan.pl,znaleziony,Granatowy z paskiem.,52.4048,16.9156,140
+Słuchawki bezprzewodowe,Słuchawki,2023-11-07,Poznań,Kaponiery 2,Biuro Rzeczy Znalezionych MPK,mzk@poznan.pl,znaleziony,Białe etui, brak jednego wkładu.,52.4092,16.9122,130
+Książka "Lalka",Książka,2023-11-08,Poznań,Roosevelta 15,Biblioteka Miejska,biblioteka@poznan.pl,znaleziony,Zakładka w środku.,52.4111,16.9128,120
+Zegarek sportowy,Zegarek,2023-11-09,Poznań,Półwiejska 12,Biuro Rzeczy Znalezionych Poznań,biuro@poznan.pl,znaleziony,Czarny pasek silikonowy.,52.4037,16.9231,170
+Torba na laptopa,Torba,2023-11-10,Poznań,Grunwaldzka 88,MPK Poznań,mzk@poznan.pl,znaleziony,Szara, kieszeń na zasilacz.,52.4004,16.8879,190
+

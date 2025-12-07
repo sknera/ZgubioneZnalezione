@@ -48,7 +48,7 @@
             <div class="glass-card" style="flex: 1; text-align: center; cursor: pointer; border: 2px solid #ccc;"
                 onclick="selectSource('csv')">
                 <div style="font-size: 3rem;">📄</div>
-                <h4>Wgraj plik CSV</h4>
+                <h4>Wgraj plik CSV / JSON / JSONL</h4>
                 <p>Importuj dane z gotowego pliku</p>
             </div>
             <div class="glass-card" style="flex: 1; text-align: center; cursor: pointer; border: 2px solid #ccc;"
@@ -61,8 +61,8 @@
 
         <div id="csvUploadSection" style="margin-top: 20px;" hidden>
             <div class="drop-zone">
-                <p>Upuść plik CSV tutaj lub kliknij aby wybrać</p>
-                <input type="file" id="csvFile" accept=".csv">
+                <p>Upuść plik CSV/JSON/JSONL tutaj lub kliknij aby wybrać</p>
+                <input type="file" id="csvFile" accept=".csv,.json,.jsonl,.ndjson">
             </div>
             <button class="submit-btn" style="margin-top: 20px;" onclick="uploadCSV()">Wgraj i Analizuj</button>
         </div>
@@ -91,7 +91,7 @@
     <div id="step4" class="wizard-step" hidden>
         <h3>Krok 4: Publikacja w dane.gov.pl</h3>
         <div class="glass-card" style="text-align: center; padding: 40px;">
-            <div style="font-size: 4rem; margin-bottom: 20px;">🚀</div>
+            <div style="font-size: 4rem; margin-bottom: 20px; color: #0F8A3C;">✅</div>
             <h4>Gotowy do publikacji!</h4>
             <p>Twój zbiór danych został zweryfikowany i jest gotowy do wysłania na portal dane.gov.pl.</p>
             <button class="submit-btn" style="font-size: 1.2rem; padding: 15px 40px; margin-top: 20px;"
@@ -201,7 +201,17 @@
     async function publishDataset() {
         const title = document.getElementById('datasetTitle').value;
         const desc = document.getElementById('datasetDesc').value;
-
+        // Fetch the latest items (including any edits)
+        let items = [];
+        try {
+            const resp = await fetch('/urzad/get_uploaded_items');
+            const data = await resp.json();
+            items = data.items || [];
+        } catch (e) {
+            console.error('Failed to fetch edited items:', e);
+            // Fallback to previously uploaded items if fetch fails
+            items = window.uploadedItems || [];
+        }
         try {
             const response = await fetch('/urzad/publish', {
                 method: 'POST',
@@ -209,14 +219,15 @@
                 body: JSON.stringify({
                     title: title,
                     description: desc,
-                    items: window.uploadedItems || []
+                    items: items
                 })
             });
             const result = await response.json();
-
             if (result.success) {
                 alert(result.message);
                 window.location.href = "{{ url_for('urzad_dashboard') }}";
+            } else {
+                alert('Błąd publikacji: ' + result.message);
             }
         } catch (e) {
             alert('Błąd publikacji.');

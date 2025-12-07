@@ -19,7 +19,10 @@ class FoundItemSchema:
         'opis_szczegolowy',
         'zdjecie_url',
         'kontakt_telefon',
-        'sygnatura_sprawy'
+        'sygnatura_sprawy',
+        'location_lat',
+        'location_lng',
+        'location_radius'
     ]
 
     @staticmethod

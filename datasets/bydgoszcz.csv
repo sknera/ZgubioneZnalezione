@@ -1,0 +1,12 @@
+nazwa_przedmiotu,kategoria,data_znalezienia,miejsce_znalezienia_miasto,miejsce_znalezienia_ulica,jednostka_przechowujaca,kontakt_email,status,opis_szczegolowy,location_lat,location_lng,location_radius
+Portfel młodzieżowy,Portfel,2023-11-01,Bydgoszcz,Gdańska 12,Biuro Rzeczy Znalezionych Bydgoszcz,biuro@bydgoszcz.pl,znaleziony,Niebieski z rzepem.,53.1238,18.0089,170
+Klucze do mieszkania,Klucze,2023-11-02,Bydgoszcz,Focha 8,Komisariat Śródmieście,policja@bydgoszcz.pl,znaleziony,Dwa klucze i chip.,53.1242,18.0021,150
+Telefon Xiaomi Redmi,Telefon,2023-11-03,Bydgoszcz,Dworcowa 80,PKP Bydgoszcz,pkp@bydgoszcz.pl,znaleziony,Czarny, porysowana obudowa.,53.1290,18.0065,200
+Plecak szkolny,Plecak,2023-11-04,Bydgoszcz,Mostowa 2,ZDMiKP Bydgoszcz,zdmi@bydgoszcz.pl,znaleziony,Granatowy w kratkę.,53.1231,18.0099,210
+Okulary w etui,Okulary,2023-11-05,Bydgoszcz,Plac Wolności 5,Biblioteka Miejska,biblioteka@bydgoszcz.pl,znaleziony,Etui czerwone.,53.1239,18.0037,140
+Parasol składany,Parasol,2023-11-06,Bydgoszcz,Jagiellońska 10,Biuro Rzeczy Znalezionych Bydgoszcz,biuro@bydgoszcz.pl,znaleziony,Czarny, metalowy stelaż.,53.1254,18.0105,150
+Słuchawki TWS,Słuchawki,2023-11-07,Bydgoszcz,Wyszogrodzka 2,Komunikacja Miejska,km@bydgoszcz.pl,znaleziony,Białe etui, brak lewego wkładu.,53.1282,18.0150,160
+Książka "Mały Książę",Książka,2023-11-08,Bydgoszcz,Paderewskiego 1,Biblioteka Miejska,biblioteka@bydgoszcz.pl,znaleziony,Stara okładka miękka.,53.1218,18.0009,130
+Zegarek dziecięcy,Zegarek,2023-11-09,Bydgoszcz,Królowej Jadwigi 6,Centrum Handlowe,centrum@bydgoszcz.pl,znaleziony,Zielony pasek, motyw kosmosu.,53.1209,18.0077,170
+Torba na ramię,Torba,2023-11-10,Bydgoszcz,Garbary 3,Biuro Rzeczy Znalezionych Bydgoszcz,biuro@bydgoszcz.pl,znaleziony,Brązowa, kieszeń na tablet.,53.1225,18.0118,190
+

@@ -1,4 +1,6 @@
-nazwa_przedmiotu,kategoria,data_znalezienia,miejsce_znalezienia_miasto,miejsce_znalezienia_ulica,jednostka_przechowujaca,kontakt_email,status,opis_szczegolowy
-Czerwony Portfel,Dokumenty,2023-11-01,Poznań,Półwiejska 12,Biuro Rzeczy Znalezionych Poznań,biuro@poznan.pl,znaleziony,Zawiera kartę miejską
-Klucze do samochodu,Klucze,2023-11-02,Poznań,Głogowska 45,Komisariat Policji,policja@poznan.pl,znaleziony,Marka Toyota
-Telefon Samsung,Elektronika,2023-11-03,Poznań,Młyńska 1,Biuro Rzeczy Znalezionych Poznań,biuro@poznan.pl,znaleziony,Czarny z pękniętym ekranem
+nazwa_przedmiotu,kategoria,data_znalezienia,miejsce_znalezienia_miasto,miejsce_znalezienia_ulica,jednostka_przechowujaca,kontakt_email,status,opis_szczegolowy,location_lat,location_lng,location_radius
+Skórzany portfel,Portfel,2024-10-12,Poznań,Stary Rynek 1,Straż Miejska Poznań,biuro@poznan.pl,znaleziony,Brązowy portfel z inicjałami.,52.40637,16.92517,250
+Smartfon Samsung Galaxy,Telefon,2024-10-15,Poznań,Dworcowa 16,Biuro Rzeczy Znalezionych Poznań,znalezione@poznan.pl,znaleziony,Czarny telefon z pękniętym ekranem.,52.40201,16.91190,220
+Pęk kluczy samochodowych,Klucze,2024-10-18,Poznań,Mostowa 5,Komisariat Policji,policja@poznan.pl,znaleziony,Brelok w kształcie auta.,52.40780,16.94630,180
+Plecak turystyczny,Plecak,2024-10-20,Poznań,Termalna 1,MPK Poznań,mzk@poznan.pl,znaleziony,Niebieski plecak z naszywkami.,52.39450,16.96150,300
+Okulary przeciwsłoneczne,Okulary,2024-10-22,Poznań,Święty Marcin 40,Centrum Handlowe Posnania,centrum@poznan.pl,znaleziony,Czarne oprawki w etui.,52.40690,16.91740,200

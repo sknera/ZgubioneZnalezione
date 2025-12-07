@@ -1,0 +1,78 @@
+[
+  {
+    "nazwa_przedmiotu": "Portfel skórzany",
+    "kategoria": "Portfel",
+    "data_znalezienia": "2023-11-01",
+    "miejsce_znalezienia_miasto": "Poznań",
+    "miejsce_znalezienia_ulica": "Stary Rynek 5",
+    "jednostka_przechowujaca": "Biuro Rzeczy Znalezionych Poznań",
+    "kontakt_email": "biuro@poznan.pl",
+    "status": "znaleziony",
+    "opis_szczegolowy": "Brązowy portfel z inicjałami.",
+    "location_lat": 52.4065,
+    "location_lng": 16.9252,
+    "location_radius": 180,
+    "pytanie_weryfikacyjne": "Jakie inicjały znajdują się w portfelu?"
+  },
+  {
+    "nazwa_przedmiotu": "Klucze z brelokiem",
+    "kategoria": "Klucze",
+    "data_znalezienia": "2023-11-02",
+    "miejsce_znalezienia_miasto": "Poznań",
+    "miejsce_znalezienia_ulica": "Mostowa 5",
+    "jednostka_przechowujaca": "Biuro Rzeczy Znalezionych Poznań",
+    "kontakt_email": "biuro@poznan.pl",
+    "status": "znaleziony",
+    "opis_szczegolowy": "Pęk kluczy samochodowych, brelok w kształcie auta.",
+    "location_lat": 52.4074,
+    "location_lng": 16.9467,
+    "location_radius": 220,
+    "pytanie_weryfikacyjne": "Jaki to samochód?"
+  },
+  {
+    "nazwa_przedmiotu": "Telefon Samsung A52",
+    "kategoria": "Telefon",
+    "data_znalezienia": "2023-11-03",
+    "miejsce_znalezienia_miasto": "Poznań",
+    "miejsce_znalezienia_ulica": "Dworcowa 1",
+    "jednostka_przechowujaca": "Biuro Rzeczy Znalezionych PKP",
+    "kontakt_email": "pkp@poznan.pl",
+    "status": "znaleziony",
+    "opis_szczegolowy": "Niebieska obudowa, pęknięty ekran.",
+    "location_lat": 52.4022,
+    "location_lng": 16.9109,
+    "location_radius": 200,
+    "pytanie_weryfikacyjne": "Jaka jest tapeta blokady?"
+  },
+  {
+    "nazwa_przedmiotu": "Plecak granatowy",
+    "kategoria": "Plecak",
+    "data_znalezienia": "2023-11-04",
+    "miejsce_znalezienia_miasto": "Poznań",
+    "miejsce_znalezienia_ulica": "Mostowa 12",
+    "jednostka_przechowujaca": "MPK Poznań",
+    "kontakt_email": "mzk@poznan.pl",
+    "status": "znaleziony",
+    "opis_szczegolowy": "Ma naszywki górskie.",
+    "location_lat": 52.4074,
+    "location_lng": 16.9467,
+    "location_radius": 220,
+    "pytanie_weryfikacyjne": "Jakiego koloru są naszywki?"
+  },
+  {
+    "nazwa_przedmiotu": "Okulary korekcyjne",
+    "kategoria": "Okulary",
+    "data_znalezienia": "2023-11-05",
+    "miejsce_znalezienia_miasto": "Poznań",
+    "miejsce_znalezienia_ulica": "Święty Marcin 40",
+    "jednostka_przechowujaca": "Centrum Handlowe",
+    "kontakt_email": "centrum@poznan.pl",
+    "status": "znaleziony",
+    "opis_szczegolowy": "Czarne oprawki w etui.",
+    "location_lat": 52.4069,
+    "location_lng": 16.9178,
+    "location_radius": 150,
+    "pytanie_weryfikacyjne": "Jak wygląda etui na okulary?"
+  }
+]
+

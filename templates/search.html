@@ -4,7 +4,7 @@
 <div class="search-container">
     <div class="search-header">
         <h2>Baza Znalezionych Przedmiotów</h2>
-        <form class="search-filters" action="{{ url_for('search') }}" method="GET" role="search">
+        <form id="searchForm" class="search-filters" action="{{ url_for('search') }}" method="GET" role="search">
             <div class="search-main">
                 <label for="q" class="visually-hidden" style="position:absolute; left:-9999px">Szukaj</label>
                 <input type="text" id="q" name="q" placeholder="Wpisz nazwę lub opis przedmiotu..."
@@ -32,6 +32,32 @@
                     <input type="date" id="date-filter" name="date" value="{{ request.args.get('date', '') }}">
                 </div>
             </div>
+
+            <input type="hidden" name="circle_lat" id="circle_lat" value="{{ request.args.get('circle_lat', '') }}">
+            <input type="hidden" name="circle_lng" id="circle_lng" value="{{ request.args.get('circle_lng', '') }}">
+            <input type="hidden" name="circle_radius" id="circle_radius"
+                value="{{ request.args.get('circle_radius', '') }}">
+
+            <div class="map-filter-card">
+                <div class="map-filter-header">
+                    <div>
+                        <h3>Przybliżona lokalizacja zgubienia</h3>
+                        <p class="map-hint">Niebieskie kropki pokazują, gdzie zwykle zgłaszane są przedmioty. Użyj
+                            domyślnego narzędzia rysowania koła, aby zawęzić wyniki do wskazanego obszaru.</p>
+                    </div>
+                    <button type="button" class="ghost-btn" id="clearCircleBtn">Wyczyść obszar</button>
+                </div>
+                <div id="searchMap" aria-label="Mapa do zaznaczenia przybliżonej lokalizacji"></div>
+                <div class="map-status-row">
+                    <span id="activeAreaInfo" class="map-status">
+                        {% if request.args.get('circle_radius') %}
+                        Aktywny filtr obszaru: promień {{ request.args.get('circle_radius')|float|round(0) }} m
+                        {% else %}
+                        Brak aktywnego filtra obszaru
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
         </form>
     </div>
 
@@ -49,7 +75,8 @@
                 <p class="description">{{ item.description }}</p>
             </div>
             <div class="item-actions">
-                <button class="contact-btn" onclick="openClaimModal('{{ item.id }}', '{{ item.security_question }}')">
+                <button class="contact-btn"
+                    onclick="openClaimModal('{{ item.id }}', '{{ item.security_question }}', {{ item.security_answer_examples|default([])|tojson }})">
                     Zgłoś roszczenie
                 </button>
             </div>
@@ -76,6 +103,7 @@
         <div class="question-box">
             <strong>Pytanie od znalazcy:</strong>
             <div id="modalQuestion" style="font-size: 1.1em; margin-top: 5px;"></div>
+            <div id="modalExamples" style="margin-top:8px; color:#444; font-size:0.95em;"></div>
         </div>
 
         <form id="claimForm">
@@ -89,4 +117,119 @@
         </form>
     </div>
 </div>
+
+<script id="map-points-data" type="application/json">{{ map_points | tojson }}</script>
+<script id="circle-params" type="application/json">{{ circle_params | tojson }}</script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mapPointsEl = document.getElementById('map-points-data');
+        const mapPoints = mapPointsEl ? JSON.parse(mapPointsEl.textContent || '[]') : [];
+        const circleParamsEl = document.getElementById('circle-params');
+        const circleParams = circleParamsEl ? JSON.parse(circleParamsEl.textContent || '{}') : {};
+
+        const form = document.getElementById('searchForm');
+        const latInput = document.getElementById('circle_lat');
+        const lngInput = document.getElementById('circle_lng');
+        const radiusInput = document.getElementById('circle_radius');
+        const clearBtn = document.getElementById('clearCircleBtn');
+        const statusLabel = document.getElementById('activeAreaInfo');
+
+        const defaultCenter = [52.40637, 16.92517]; // Poznań
+        const hasCircle = circleParams && circleParams.lat != null && circleParams.lng != null && circleParams.radius;
+        const initialCenter = hasCircle
+            ? [circleParams.lat, circleParams.lng]
+            : (mapPoints.length
+                ? [mapPoints.reduce((sum, p) => sum + p.lat, 0) / mapPoints.length, mapPoints.reduce((sum, p) => sum + p.lng, 0) / mapPoints.length]
+                : defaultCenter);
+        const initialZoom = hasCircle ? 13 : 12;
+
+        const map = L.map('searchMap').setView(initialCenter, initialZoom);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Show dots with where items are usually lost
+        const markerLayer = L.layerGroup().addTo(map);
+        mapPoints.forEach(point => {
+            L.circleMarker([point.lat, point.lng], {
+                radius: 6,
+                color: '#003399',
+                fillColor: '#4F46E5',
+                fillOpacity: 0.6
+            }).bindPopup(`<strong>${point.name}</strong><br>${point.category || ''}<br>${point.date || ''}`).addTo(markerLayer);
+        });
+
+        const drawnItems = new L.FeatureGroup().addTo(map);
+        const drawControl = new L.Control.Draw({
+            draw: {
+                polygon: false,
+                rectangle: false,
+                polyline: false,
+                marker: false,
+                circlemarker: false,
+                circle: {
+                    shapeOptions: { color: '#003399', fillOpacity: 0.12, weight: 2 }
+                }
+            },
+            edit: {
+                featureGroup: drawnItems,
+                edit: false,
+                remove: true
+            }
+        });
+        map.addControl(drawControl);
+
+        function setStatus(text) {
+            if (statusLabel) statusLabel.textContent = text;
+        }
+
+        function clearCircleInputs() {
+            latInput.value = '';
+            lngInput.value = '';
+            radiusInput.value = '';
+        }
+
+        map.on(L.Draw.Event.CREATED, function (e) {
+            drawnItems.clearLayers();
+            drawnItems.addLayer(e.layer);
+            const center = e.layer.getLatLng();
+            const radius = e.layer.getRadius();
+            latInput.value = center.lat.toFixed(6);
+            lngInput.value = center.lng.toFixed(6);
+            radiusInput.value = Math.round(radius);
+            setStatus(`Aktywny filtr obszaru: promień ${Math.round(radius)} m`);
+            map.fitBounds(e.layer.getBounds());
+            form.submit();
+        });
+
+        map.on(L.Draw.Event.DELETED, function () {
+            clearCircleInputs();
+            setStatus('Brak aktywnego filtra obszaru');
+            form.submit();
+        });
+
+        if (hasCircle) {
+            const circle = L.circle([circleParams.lat, circleParams.lng], {
+                radius: circleParams.radius,
+                color: '#003399',
+                fillOpacity: 0.12,
+                weight: 2
+            });
+            drawnItems.addLayer(circle);
+            map.fitBounds(circle.getBounds());
+            setStatus(`Aktywny filtr obszaru: promień ${Math.round(circleParams.radius)} m`);
+        }
+
+        clearBtn?.addEventListener('click', () => {
+            drawnItems.clearLayers();
+            clearCircleInputs();
+            setStatus('Brak aktywnego filtra obszaru');
+            form.submit();
+        });
+    });
+</script>
 {% endblock %}

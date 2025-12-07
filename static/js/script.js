@@ -16,8 +16,17 @@ document.addEventListener('DOMContentLoaded', () => {
         date: document.getElementById('date')
     };
 
+    // Default category
+    if (formFields.category && !formFields.category.value) {
+        formFields.category.value = 'Dokumenty';
+    }
+
     // Drag & Drop handlers
-    dropZone.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('click', (e) => {
+        // Avoid double file picker when clicking directly on the hidden input
+        if (e.target === fileInput) return;
+        fileInput.click();
+    });
 
     dropZone.addEventListener('dragover', (e) => {
         e.preventDefault();
@@ -62,7 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.onload = (e) => {
             imagePreview.src = e.target.result;
             previewContainer.hidden = false;
+            previewContainer.style.display = 'block';
             dropZoneContent.hidden = true;
+            if (removeBtn) removeBtn.style.display = 'inline-block';
         };
         reader.readAsDataURL(file);
 
@@ -73,8 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function resetUpload() {
         fileInput.value = '';
         previewContainer.hidden = true;
+        previewContainer.style.display = 'none';
         dropZoneContent.hidden = false;
         imagePreview.src = '';
+        if (removeBtn) removeBtn.style.display = 'none';
     }
 
     async function uploadAndAnalyze(file) {
@@ -199,10 +212,20 @@ document.addEventListener('DOMContentLoaded', () => {
 // Claim Modal Logic
 const claimModal = document.getElementById('claimModal');
 const claimForm = document.getElementById('claimForm');
+const modalExamples = document.getElementById('modalExamples');
 
-function openClaimModal(itemId, question) {
+function openClaimModal(itemId, question, examples) {
     document.getElementById('claimItemId').value = itemId;
     document.getElementById('modalQuestion').innerText = question || "Brak pytania (opisz przedmiot)";
+    if (modalExamples) {
+        if (Array.isArray(examples) && examples.length) {
+            modalExamples.innerHTML = `<div style="font-weight:600; margin-bottom:4px;">Przykładowe poprawne odpowiedzi:</div><ul style="padding-left:18px; margin:0;">${examples.map(e => `<li>${e}</li>`).join('')}</ul>`;
+            modalExamples.hidden = false;
+        } else {
+            modalExamples.innerHTML = '';
+            modalExamples.hidden = true;
+        }
+    }
     claimModal.hidden = false;
 }
 

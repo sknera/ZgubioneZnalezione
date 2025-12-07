@@ -1,0 +1,12 @@
+nazwa_przedmiotu,kategoria,data_znalezienia,miejsce_znalezienia_miasto,miejsce_znalezienia_ulica,jednostka_przechowujaca,kontakt_email,status,opis_szczegolowy,location_lat,location_lng,location_radius
+Portfel damski,Portfel,2023-11-01,Warszawa,Marszałkowska 99,Biuro Rzeczy Znalezionych Warszawa,biuro@warszawa.pl,znaleziony,Czerwony, kilka kart lojalnościowych.,52.2298,21.0124,180
+Klucze z pilotem,Klucze,2023-11-02,Warszawa,Nowy Świat 15,Komisariat Śródmieście,policja@warszawa.pl,znaleziony,Brelok skórzany.,52.2321,21.0185,150
+Telefon iPhone 12,Telefon,2023-11-03,Warszawa,Al. Jerozolimskie 54,ZTM Warszawa,ztm@warszawa.pl,znaleziony,Czarny, pęknięty tył.,52.2291,21.0032,200
+Plecak czarny,Plecak,2023-11-04,Warszawa,Świętokrzyska 20,Metro Warszawa,metro@warszawa.pl,znaleziony,Mieści laptop 15", logotyp górski.,52.2356,21.0108,220
+Okulary przeciwsłoneczne,Okulary,2023-11-05,Warszawa,Plac Bankowy 3,Urząd Miasta Warszawa,info@warszawa.pl,znaleziony,Złote oprawki.,52.2445,21.0012,140
+Parasol automatyczny,Parasol,2023-11-06,Warszawa,Krakowskie Przedmieście 30,Biuro Rzeczy Znalezionych Warszawa,biuro@warszawa.pl,znaleziony,Granatowy, pasek na nadgarstek.,52.2430,21.0149,130
+Słuchawki nauszne,Słuchawki,2023-11-07,Warszawa,Patelnia Metro Centrum,ZTM Warszawa,ztm@warszawa.pl,znaleziony,Białe, lekko porysowane.,52.2295,21.0116,160
+Książka "Zbrodnia i kara",Książka,2023-11-08,Warszawa,Chmielna 25,Biblioteka Publiczna,biblioteka@warszawa.pl,znaleziony,Miękka oprawa, zakładka.,52.2327,21.0103,150
+Zegarek srebrny,Zegarek,2023-11-09,Warszawa,Emilii Plater 31,PKiN Informacja,info@pkin.pl,znaleziony,Bransoleta metalowa.,52.2318,21.0069,170
+Torba sportowa,Torba,2023-11-10,Warszawa,Stadion Narodowy 1,Operator Stadionu,stadion@warszawa.pl,znaleziony,Granatowa, napis "sport".,52.2394,21.0456,210
+

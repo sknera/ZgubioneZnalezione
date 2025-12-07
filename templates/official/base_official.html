@@ -8,23 +8,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
-        /* Specific overrides for Official Portal */
+        /* Specific overrides for Official Portal to match main site header */
         .official-header {
-            background-color: #002b80;
-            /* Darker blue */
-            border-bottom: 4px solid #DC143C;
+            background-color: var(--bg-color);
+            border-bottom: 4px solid var(--primary-color);
+        }
+
+        .official-header .logo h1 {
+            color: var(--primary-color);
+        }
+
+        .official-header .logo .highlight {
+            color: var(--secondary-color);
+        }
+
+        .official-header .logo small {
+            color: var(--text-color);
         }
 
         .official-nav a {
-            color: white;
+            color: var(--primary-color);
         }
 
         .official-nav a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: var(--bg-alt);
         }
 
         .official-nav a.active {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: var(--primary-color);
+            color: white;
             text-decoration: none;
         }
 
@@ -78,11 +90,10 @@
 <body>
     <div class="app-container">
         <header class="main-header official-header" role="banner">
-            <a href="{{ url_for('urzad_dashboard') }}" class="logo" style="color: white;">
-                <span class="logo-icon" aria-hidden="true">🏛️</span>
+            <a href="{{ url_for('urzad_dashboard') }}" class="logo">
                 <div>
-                    <h1>Strefa <span class="highlight" style="color: #ffcccb;">Urzędnika</span></h1>
-                    <small style="color: #ddd;">Panel Zarządzania Danymi</small>
+                    <h1>Strefa <span class="highlight">Urzędnika</span></h1>
+                    <small>Panel Zarządzania Danymi</small>
                 </div>
             </a>
             <nav class="official-nav" role="navigation">
